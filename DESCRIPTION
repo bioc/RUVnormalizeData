@@ -1,0 +1,15 @@
+Package: RUVnormalizeData
+Title: Gender data for the RUVnormalize package
+Version: 0.99.0
+Date: 2013-11-10
+Author: Laurent Jacob
+Maintainer: Laurent Jacob <laurent.jacob@univ-lyon1.fr>
+Description: Microarray gene expression data from the study of Vawter
+        et al., 2004.
+License: GPL-3
+LazyLoad: yes
+Imports:
+Suggests:
+Depends: R (>= 2.10.0), Biobase
+NeedsCompilation: no
+biocViews: ExpressionData

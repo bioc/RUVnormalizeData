@@ -1,0 +1,109 @@
+%\VignetteIndexEntry{RUVnormalizeData}
+%\VignettePackage{RUVnormalizeData}
+
+
+\documentclass[11pt]{article}
+
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{natbib}
+\usepackage[pdftex]{graphicx}
+\usepackage{url}
+\SweaveOpts{keep.source=TRUE,eps=TRUE,pdf=TRUE,prefix=TRUE} 
+
+% R part
+\newcommand{\R}[1]{{\textsf{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+\newcommand{\Metas}[1]{{\texttt{#1}}}
+
+\begin{document}
+\title{Gender study gene expression data from \cite{Vawter2004Gender}}
+\author{Laurent Jacob}
+
+\maketitle
+
+\section{Introduction}
+
+\cite{Vawter2004Gender} studied differences in gene expression between
+male and female patients. 
+
+This gender study is an interesting benchmark for methods aiming at
+removing unwanted variation as it expected to be affected by several
+technical and biological factors: two microarray platforms, three
+different labs, three tissue localizations in the brain. Most of the
+$10$ patients involved in the study had samples taken from the
+anterior cingulate cortex (a), the dorsolateral prefontal cortex (d)
+and the cerebellar hemisphere (c). Most of these samples were sent to
+three independent labs: UC Irvine (I), UC Davis (D) and University of
+Michigan, Ann Arbor (M).
+
+Gene expression was measured using either HGU-95A or HGU-95Av2
+Affymetrix arrays with $12,600$ genes shared between the two platforms
+($12,626$ on the HG-U95A and $12,625$ on the HGu-95Av2). Six of the
+$10\times 3\times 3$ combinations were missing, leading to $84$
+samples.
+
+\cite{Gagnon-Bartsch2012Using} used the resulting dataset to study the
+performances of RUV-2: the number of genes from the X and Y
+chromosomes which were among the most differentially expressed genes
+between male and female patients was used to assess how much each
+correction method helped. Following this paper, we pre-processed each
+array using RMA, and log transformed the probe intensities.
+
+This data package also provides negative control probeset
+indices. These indices correspond to the $799$ housekeeping probesets
+which were provided in~\cite{Eisenberg2003Human} and used
+in~\cite{Gagnon-Bartsch2012Using}.
+
+The data in this package is used in the vignette and examples of the
+\Rpackage{RUVnormalize} package. \Rpackage{RUVnormalize} implements
+normalization methods from \cite{Jacob2012Correcting}, intended for
+the case where neither the unwanted variation sources nor the factors
+of interest are observed. This situation arises when performing
+unsupervised estimation tasks such as clustering or PCA, in the
+presence of unwanted variation. It can also be the case that one needs
+to normalize a dataset without knowing which factors of interest will
+be studied. The objective is then to correct the gene expression by
+estimating and removing the unwanted variation, without removing the
+--- unobserved --- variation of interest.
+
+\section{Object}
+
+The package contains a single \Rclass{ExpressionSet} object
+\Robject{gender} which describes the data from
+\cite{Vawter2004Gender}.
+
+The assayData field contains the $12600 \times 84$ gene expression
+matrix.
+
+The phenoData field contains an \Rclass{AnnotatedDataFrame} object
+describing the samples. The first column indicates the gender ('F' for
+female, 'M' for male). The next three columns indicate the lab: a one
+in the second, third or fourth column indicates that the sample was
+hybridized and scanned at UC Davis, UC Irvine or University of
+Michigan, Ann Arbor respectively. The last three columns contain brain
+regions. A one in the fifth, sixth or seventh column indicates that
+the sample was extracted from the anterior cingulate cortex,
+cerebellum or dorsolateral prefrontal cortex respectively.
+
+The featureData field contains an \Rclass{AnnotatedDataFrame} object
+with a single logical vectors indicating which probesets where used as
+negative controls in \cite{Gagnon-Bartsch2012Using}.
+
+The annotation field indicates the chip type, among HGU-95A and
+HGU-95Av2 Affymetrix arrays.
+
+\section{Session Information}
+
+<<sessionInfo, echo=FALSE>>=
+sessionInfo()
+@
+
+\bibliographystyle{plainnat}
+\bibliography{bibli}
+
+\end{document}
