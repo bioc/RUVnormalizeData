@@ -1,6 +1,6 @@
 Package: RUVnormalizeData
 Title: Gender data for the RUVnormalize package
-Version: 0.105.0
+Version: 0.106.0
 Date: 2013-11-10
 Author: Laurent Jacob
 Maintainer: Laurent Jacob <laurent.jacob@univ-lyon1.fr>
